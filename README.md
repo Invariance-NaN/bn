@@ -9,12 +9,12 @@
 | Dual Shortcut PC | Done | Done |
 
 Data sets:
-| Data Set     | Status |
-|--------------|--------|
-| Random       | Done   |
-| ALARM        | Done   |
-| CHILD        | Done   |
-| ...          | ...    |
+| Data Set     | Status | # of nodes | # of edges |
+|--------------|--------|------------|------------|
+| Random       | Done   | varies     | varies     |
+| ALARM        | Done   | ?          | ?          |
+| CHILD        | Done   | ?          | ?          |
+| MUNIN        | Done   | ?          | ?          |
 
 ## Benchmarks
 ### Fixed Benchmarks:
