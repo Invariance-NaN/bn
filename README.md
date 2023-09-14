@@ -8,8 +8,8 @@
 | Shortcut PC      | Done | Done |
 | Dual Shortcut PC | Done | Done |
 
-Data sets:
-| Data Set     | Status | # of nodes | # of edges |
+## Networks
+| Network      | Status | # of nodes | # of edges |
 |--------------|--------|------------|------------|
 | Random       | Done   | varies     | varies     |
 | ALARM        | Done   | ?          | ?          |
