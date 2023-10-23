@@ -5,23 +5,25 @@
 #include <vector>
 
 class DataFrame {
-  struct ColumnMeta {
-    std::string name;
-    unsigned cardinality;
-  };
+	struct ColumnMeta {
+		std::string name;
+		unsigned cardinality;
+	};
 
-  std::vector<ColumnMeta> columns;
-  std::vector<std::vector<unsigned>> data;
+	std::vector<ColumnMeta> columns;
+	std::vector<std::vector<unsigned>> data;
 
- public:
-  bool conditional_independency_test(
-    std::string x,
-    std::string y,
-    std::vector<std::string> zs
-  ) {
-    //
-  }
+   public:
+	bool conditional_independency_test(
+		std::string x, std::string y, std::vector<std::string> zs
+	) {
+		// TODO: implement
+		return false;
+	}
 };
 
+class FakeDataFrame {
+
+};
 
 #endif
