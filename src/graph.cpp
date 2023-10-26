@@ -10,6 +10,13 @@ using std::unordered_map;
 using std::unordered_set;
 using std::vector;
 
+Graph::Graph(
+	std::unordered_set<std::string> nodes,
+	std::unordered_map<std::string, std::unordered_set<std::string>>
+		neighbors_map
+)
+	: nodes(nodes), neighbors_map(neighbors_map){};
+
 void Graph::add_edge(string x, string y) {
 	neighbors_map[x].insert(y);
 	neighbors_map[y].insert(x);
@@ -25,7 +32,7 @@ bool Graph::has_edge(string x, string y) {
 }
 
 vector<string> Graph::neighbors(string node) {
-	auto ns = &neighbors_map[node];
+	unordered_set<string> *ns = &neighbors_map[node];
 	return vector<string>(ns->begin(), ns->end());
 }
 
@@ -44,11 +51,11 @@ bool Digraph::has_edge(string x, string y) {
 };
 
 void Digraph::isolate(std::string x) {
-	for (auto& parent: parents_map[x]) {
+	for (const string &parent : parents_map[x]) {
 		children_map[parent].erase(x);
 	}
 
-	for (auto& child: children_map[x]) {
+	for (const string &child : children_map[x]) {
 		parents_map[child].erase(x);
 	}
 
@@ -57,12 +64,12 @@ void Digraph::isolate(std::string x) {
 };
 
 vector<string> Digraph::children(string node) {
-	auto cs = &children_map[node];
+	unordered_set<string> *cs = &children_map[node];
 	return vector<string>(cs->begin(), cs->end());
 };
 
 vector<string> Digraph::parents(string node) {
-	auto ps = &parents_map[node];
+	unordered_set<string> *ps = &parents_map[node];
 	return vector<string>(ps->begin(), ps->end());
 };
 
@@ -100,6 +107,18 @@ unordered_set<string> Digraph::ancestors(vector<string> nodes) {
 	return result;
 };
 
+Graph Digraph::unordered() {
+	auto neighbors_map = children_map;
+
+	for (auto &[node, children] : children_map) {
+		for (const string &child : children) {
+			neighbors_map[child].insert(node);
+		}
+	}
+
+	return Graph(nodes, neighbors_map);
+}
+
 bool Digraph::d_separated(string x, string y, vector<string> zs) {
 	vector<string> nodes = zs;
 	nodes.push_back(x);
@@ -117,27 +136,25 @@ bool Digraph::d_separated(string x, string y, vector<string> zs) {
 	moralized.moralize();
 
 	for (auto& z : zs) {
-	    moralized.isolate(z);
+		moralized.isolate(z);
 	}
 
 	return !moralized.connected(x, y);
 }
 
-
 void Digraph::moralize() {
-	for (auto &z : nodes) {
-    	auto z_parents = parents(z);
+	for (auto& z : nodes) {
+		auto z_parents = parents(z);
 
 		for (size_t i = 0; i < z_parents.size(); ++i) {
-			auto &x = z_parents[i];
+			auto& x = z_parents[i];
 
 			for (size_t j = i + 1; i < z_parents.size(); ++i) {
-				auto &y = z_parents[j];
+				auto& y = z_parents[j];
 
 				if (!has_edge(x, y) || has_edge(y, x)) {
 					add_edge(x, y);
 				}
-
 			}
 		}
 	}

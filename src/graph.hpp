@@ -7,11 +7,20 @@
 #include <vector>
 
 class Graph {
+	friend class Digraph;
+
 	std::unordered_set<std::string> nodes;
 	std::unordered_map<std::string, std::unordered_set<std::string>>
 		neighbors_map;
 
+	Graph(
+		std::unordered_set<std::string> nodes,
+		std::unordered_map<std::string, std::unordered_set<std::string>>
+			neighbors_map
+	);
    public:
+
+
 	void add_edge(std::string x, std::string y);
 	void remove_edge(std::string x, std::string y);
 	bool has_edge(std::string x, std::string y);
@@ -36,6 +45,8 @@ class Digraph {
 	std::vector<std::string> children(std::string node);
 	std::vector<std::string> parents(std::string node);
 	std::unordered_set<std::string> ancestors(std::vector<std::string> node);
+
+	Graph unordered();
 
 	bool d_separated(std::string x, std::string y, std::vector<std::string> zs);
 
