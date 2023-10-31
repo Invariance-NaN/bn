@@ -2,4 +2,4 @@
 
 #include "graph.hpp"
 
-int main(int, char**) { std::cout << "Hello, from bn!\n"; }
+int main(int, char **) { std::cout << "Hello, from bn!\n"; }

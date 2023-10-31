@@ -10,11 +10,8 @@ using std::unordered_map;
 using std::unordered_set;
 using std::vector;
 
-Graph::Graph(
-	std::unordered_set<std::string> nodes,
-	std::unordered_map<std::string, std::unordered_set<std::string>>
-		neighbors_map
-)
+Graph::Graph(unordered_set<string> nodes,
+             unordered_map<string, unordered_set<string>> neighbors_map)
 	: nodes(nodes), neighbors_map(neighbors_map){};
 
 void Graph::add_edge(string x, string y) {
@@ -55,9 +52,7 @@ void Digraph::isolate(std::string x) {
 		children_map[parent].erase(x);
 	}
 
-	for (const string &child : children_map[x]) {
-		parents_map[child].erase(x);
-	}
+	for (const string &child : children_map[x]) { parents_map[child].erase(x); }
 
 	parents_map[x].clear();
 	children_map[x].clear();
@@ -75,9 +70,7 @@ vector<string> Digraph::parents(string node) {
 
 unordered_set<string> Digraph::ancestors(vector<string> nodes) {
 	unordered_set<string> result;
-	for (auto& node : nodes) {
-		result.insert(node);
-	}
+	for (auto &node : nodes) { result.insert(node); }
 
 	vector<string> to_check = move(nodes);
 
@@ -86,21 +79,17 @@ unordered_set<string> Digraph::ancestors(vector<string> nodes) {
 		to_check.clear();
 		to_check.reserve(result.size());
 
-		for (auto& node : result) {
-			to_check.push_back(node);
-		}
+		for (auto &node : result) { to_check.push_back(node); }
 	}
 
 	while (!to_check.empty()) {
 		string node = to_check.back();
 		to_check.pop_back();
 
-		for (auto& parent : parents_map[node]) {
+		for (auto &parent : parents_map[node]) {
 			bool inserted = result.insert(parent).second;
 
-			if (inserted) {
-				to_check.push_back(parent);
-			}
+			if (inserted) { to_check.push_back(parent); }
 		}
 	}
 
@@ -119,42 +108,37 @@ Graph Digraph::unordered() {
 	return Graph(nodes, neighbors_map);
 }
 
-bool Digraph::d_separated(string x, string y, vector<string> zs) {
+bool Digraph::d_separated(const string x, const string y,
+                          const vector<string> zs) {
 	vector<string> nodes = zs;
 	nodes.push_back(x);
 	nodes.push_back(y);
 
 	auto all_ancestors = ancestors(nodes);
 
-	for (auto& node : nodes) {
-		if (all_ancestors.count(node) == 0) {
-			isolate(node);
-		}
+	for (auto &node : nodes) {
+		if (all_ancestors.count(node) == 0) { isolate(node); }
 	}
 
 	Digraph moralized = *this;
 	moralized.moralize();
 
-	for (auto& z : zs) {
-		moralized.isolate(z);
-	}
+	for (const string &z : zs) { moralized.isolate(z); }
 
 	return !moralized.connected(x, y);
 }
 
 void Digraph::moralize() {
-	for (auto& z : nodes) {
+	for (auto &z : nodes) {
 		auto z_parents = parents(z);
 
 		for (size_t i = 0; i < z_parents.size(); ++i) {
-			auto& x = z_parents[i];
+			auto &x = z_parents[i];
 
 			for (size_t j = i + 1; i < z_parents.size(); ++i) {
-				auto& y = z_parents[j];
+				auto &y = z_parents[j];
 
-				if (!has_edge(x, y) || has_edge(y, x)) {
-					add_edge(x, y);
-				}
+				if (!has_edge(x, y) || has_edge(y, x)) { add_edge(x, y); }
 			}
 		}
 	}

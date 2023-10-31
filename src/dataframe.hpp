@@ -13,17 +13,14 @@ class DataFrame {
 	std::vector<ColumnMeta> columns;
 	std::vector<std::vector<unsigned>> data;
 
-   public:
-	bool conditional_independency_test(
-		std::string x, std::string y, std::vector<std::string> zs
-	) {
+public:
+	bool conditional_independency_test(std::string x, std::string y,
+	                                   std::vector<std::string> zs) {
 		// TODO: implement
 		return false;
 	}
 };
 
-class FakeDataFrame {
-
-};
+class FakeDataFrame {};
 
 #endif

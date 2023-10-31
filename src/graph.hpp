@@ -13,14 +13,11 @@ class Graph {
 	std::unordered_map<std::string, std::unordered_set<std::string>>
 		neighbors_map;
 
-	Graph(
-		std::unordered_set<std::string> nodes,
-		std::unordered_map<std::string, std::unordered_set<std::string>>
-			neighbors_map
-	);
-   public:
+	Graph(std::unordered_set<std::string> nodes,
+	      std::unordered_map<std::string, std::unordered_set<std::string>>
+	          neighbors_map);
 
-
+public:
 	void add_edge(std::string x, std::string y);
 	void remove_edge(std::string x, std::string y);
 	bool has_edge(std::string x, std::string y);
@@ -35,7 +32,7 @@ class Digraph {
 	std::unordered_map<std::string, std::unordered_set<std::string>>
 		parents_map;
 
-   public:
+public:
 	void add_edge(std::string x, std::string y);
 	void remove_edge(std::string x, std::string y);
 	bool has_edge(std::string x, std::string y);
